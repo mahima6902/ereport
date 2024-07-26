@@ -9,7 +9,7 @@ entity Course_DetailsVH as
         key courseid,
         key coursedescription,
             duration,
-//            semnumber,
+            semnumber,
     }
 
 @cds.odata.valuelist
@@ -26,12 +26,33 @@ entity Registeration_Details as
 entity Student_Details as
     projection on er.Student_Details {
         key reginumber,
-            reginum,
             studentname,
             fathername,
             age,
             gender,
             address,
             mobnumber,
+    }
+
+    @cds.odata.valuelist
+entity Academic_Details as
+    projection on er.Academic_Details {
+        key regn,
+            rollnum,
+            ongoingsemester,
+            section,
+            totalmarks,
+            subjectcodes,
+            subjectcodes.code,
+            subjectcodes.marks,
+    }
+
+    @cds.odata.valuelist
+entity Subject_Details as
+    projection on er.Subject_Details {
+        key courseid,
+        key code,
+        key ongoingsemester,
+            subdescription,
     }
 

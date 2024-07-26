@@ -1,5 +1,4 @@
-
-    {
+      {
         "name": "deploy",
         "dependencies": {
           "@sap/hdi-deploy": "^5.2.0"

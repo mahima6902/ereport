@@ -1,17 +1,29 @@
 {
   "name": "e_Report",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.x"
+  },
   "description": "A simple CAP project.",
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
     "@sap/cds": "^7",
+    "@sap/cds-hana": "^2.0.0",
+    "@sap/xsenv": "^5.1.0",
+    "@sap/xsodata": "^8.1.2",
+    "@sap/xssec": "^3",
     "express": "^4",
-    "@sap/cds-hana": "^2"
+    "odata-v4-server": "^0.2.13",
+    "@cap-js/hana": "^1"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "watch-ereportapp": "cds watch --open ereportapp/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy e_Report --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
   "cds": {
     "build": {
@@ -28,7 +40,24 @@
     "requires": {
       "db": {
         "kind": "hana-cloud"
+      },
+      "auth": {
+        "kind": "dummy"
+      },
+      "[hybrid]": {
+        "db": "hana"
       }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
     }
+  },
+  "sapux": [
+    "app/ereportapp"
+  ],
+  "devDependencies": {
+    "@sap/hdi-deploy": "4.9.5",
+    "@sap/ux-specification": "^1.120.13",
+    "rimraf": "^5.0.5"
   }
 }
